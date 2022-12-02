@@ -1,5 +1,4 @@
 import { createReducer } from "@reduxjs/toolkit";
-import {type} from "@testing-library/user-event/dist/type";
 
 const initialState = {
   products: [
@@ -106,15 +105,18 @@ const initialState = {
 };
 
 export const shopReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase('addCart', (state, action)=> {
-
-      state.cartItems = state.cartItems.map((prod)=> {
-        console.log(action.payload.amountCard)
-        console.log(prod.productId)
-        if(prod.productId === action.payload.productId) {
-          return {...prod,amount: prod.amount + action.payload.amountCard}
-        } else {
-        return state.cartItems.push({id: 3, productId: action.payload.productId, amount: action.payload.amountCard})
-        }})
-})})
+  builder.addCase("addCart", (state, action) => {
+    state.cartItems.map(({ productId }) => {
+      if (productId === action.payload.productId) {
+        console.log("это уже есть в корзине");
+        return;
+      } else {
+        return state.cartItems.push({
+          id: state.cartItems.length + 1,
+          productId: action.payload.productId,
+          amount: 1,
+        });
+      }
+    });
+  });
+});

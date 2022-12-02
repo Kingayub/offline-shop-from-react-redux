@@ -17,13 +17,17 @@ const Products = () => {
   return (
     <div className={styles.products}>
       {products.map((product) => {
-        return <Product key={product.id}
-                        name={product.name}
-                        price={product.price}
-                        discount={product.discount}
-                        left={product.left}
-                        image={product.image}
-          />;
+        return (
+          <Product
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            discount={product.discount}
+            left={product.left}
+            image={product.image}
+          />
+        );
       })}
     </div>
   );
