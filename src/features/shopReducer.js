@@ -98,7 +98,7 @@ const initialState = {
       id: 3,
       name: "Прочее",
     },
-  ],
+    ],
   cartItems: [
     { id: 1, productId: 2, amount: 2 },
     { id: 2, productId: 9, amount: 5 },
@@ -107,14 +107,11 @@ const initialState = {
 
 export const shopReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase('addCart', (state, action)=> {
-
-      state.cartItems = state.cartItems.map((prod)=> {
-        console.log(action.payload.amountCard)
-        console.log(prod.productId)
-        if(prod.productId === action.payload.productId) {
-          return {...prod,amount: prod.amount + action.payload.amountCard}
-        } else {
-        return state.cartItems.push({id: 3, productId: action.payload.productId, amount: action.payload.amountCard})
-        }})
-})})
+    .addCase('addCart', (state = initialState, action)=> {
+       state.cartItems.map((el)=> {
+          if(el.productId === action.payload.productId){
+           return {el, amount:el.amount+action.payload.amountCard}
+          }
+          return state.cartItems.push({id: action.payload.id, productId: action.payload.productId, amount: action.payload.amountCard})
+        })})
+})

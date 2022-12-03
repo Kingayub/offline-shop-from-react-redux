@@ -1,18 +1,21 @@
 import React, {useState} from 'react';
 import style from "./products.module.css"
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Product = ({image, name, price, left, discount,id}) => {
 const dispatch = useDispatch()
- const [amount,setAmount]=useState(0)
+  const cartItems = useSelector(state => state.cartItems)
 
 const addCart = () =>{
-  setAmount(amount+1)
   dispatch({type:"addCart", payload:{
     productId:id,
-    amountCard:amount,
+    amountCard:1,
+    id:cartItems.length+1
     }})
 }
+//Сделать кнопку купить неактивной при нажатии
+const [disabled,setDisabled] = useState(false)
+
   return (
     <div className={style.product}>
       <div className={style.inner}>
@@ -32,7 +35,7 @@ const addCart = () =>{
         {discount===0 ? null : `Скидка: ${discount}%` }
       </div>
         <div className={style.btn_buy}>
-        <button name="btn" onClick={addCart}> Купить </button>
+        <button name="btn" onClick={()=>addCart()} disabled={disabled}> Купить </button>
         </div>
       </div>
     </div>
