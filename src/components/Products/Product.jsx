@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 const Product = ({image, name, price, left, discount,id}) => {
 const dispatch = useDispatch()
-  const cartItems = useSelector(state => state.cartItems)
+const cartItems = useSelector(state => state.cartItems)
 
 const addCart = () =>{
   dispatch({type:"addCart", payload:{
@@ -14,7 +14,7 @@ const addCart = () =>{
     }})
 }
 //Сделать кнопку купить неактивной при нажатии
-const [disabled,setDisabled] = useState(false)
+// const [disabled,setDisabled] = useState(false)
 
   return (
     <div className={style.product}>
@@ -35,7 +35,7 @@ const [disabled,setDisabled] = useState(false)
         {discount===0 ? null : `Скидка: ${discount}%` }
       </div>
         <div className={style.btn_buy}>
-        <button name="btn" onClick={()=>addCart()} disabled={disabled}> Купить </button>
+        <button name="btn" onClick={()=>addCart()}> Купить </button>
         </div>
       </div>
     </div>

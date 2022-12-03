@@ -108,10 +108,21 @@ const initialState = {
 export const shopReducer = createReducer(initialState, (builder) => {
   builder
     .addCase('addCart', (state = initialState, action)=> {
-       state.cartItems.map((el)=> {
-          if(el.productId === action.payload.productId){
-           return {el, amount:el.amount+action.payload.amountCard}
-          }
-          return state.cartItems.push({id: action.payload.id, productId: action.payload.productId, amount: action.payload.amountCard})
-        })})
+
+      const prod = state.cartItems.find(el => el.productId === action.payload.productId)
+
+      if(prod !== undefined) {
+      state.cartItems.map(el => {
+        if(el.productId === action.payload.productId) {
+          el.amount += 1
+          return el
+        }
+      })
+      } else {
+        state.cartItems.push({id: action.payload.id, productId: action.payload.productId, amount: action.payload.amountCard})
+      }
+    })
+    .addCase('addProductInCart', (state, action)=> {
+
+    })
 })
