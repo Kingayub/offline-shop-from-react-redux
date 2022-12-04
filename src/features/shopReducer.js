@@ -110,11 +110,12 @@ export const shopReducer = createReducer(initialState, (builder) => {
     .addCase('addCart', (state = initialState, action)=> {
 
       const prod = state.cartItems.find(el => el.productId === action.payload.productId)
-
+      const isLeft = state.products.find(el => el.id === action.payload.productId)
       if(prod !== undefined) {
       state.cartItems.map(el => {
-        if(el.productId === action.payload.productId) {
+        if(el.productId === action.payload.productId && isLeft.left>0) {
           el.amount += 1
+          isLeft.left-=1
           return el
         }
       })
@@ -123,6 +124,28 @@ export const shopReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase('addProductInCart', (state, action)=> {
+      const prod = state.products.find(el => el.id === action.payload.idProduct)
+      console.log(prod)
 
+      state.cartItems.find((el) => {
+        if(el.productId === action.payload.idProduct && prod.left>0) {
+          el.amount += 1
+          prod.left-=1
+        }
+      })
+    })
+    .addCase('removeProductInCart', (state, action)=> {
+      state.cartItems.find((el) => {
+        if(el.productId === action.payload.idProduct && el.amount>1) {
+          el.amount -= 1
+        }
+      })
+    })
+    .addCase('delete', (state, action)=> {
+      state.cartItems = state.cartItems.filter(el=> {
+        if(el.productId!==action.payload.idProduct) {
+          return el
+        }
+      })
     })
 })

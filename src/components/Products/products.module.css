@@ -47,3 +47,7 @@
 .btn_buy button {
   background-color: white;
 }
+
+.disabled_btn-bay {
+  background-color: red;
+}
